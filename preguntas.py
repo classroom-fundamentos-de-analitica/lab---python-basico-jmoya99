@@ -285,7 +285,7 @@ def pregunta_09():
             cla,_ = l.split(":")
             val = dic.get(cla, 0)
             dic[cla] = val + 1
-    return sorted(dic.items())
+    return dict(sorted(dic.items()))
 
 
 def pregunta_10():
@@ -375,4 +375,3 @@ def pregunta_12():
         val = dic.get(li[0], 0)
         dic[li[0]] = val + suma
     return dict(sorted(dic.items()))
-
