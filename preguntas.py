@@ -21,7 +21,11 @@ def pregunta_01():
     214
 
     """
-    return
+    archivo = open("data.csv")
+    text = archivo.read().split("\n")
+    archivo.close()
+    secColum = [int(linea.split("\t")[1]) for linea in text if linea != '']
+    return sum(secColum)
 
 
 def pregunta_02():
@@ -39,7 +43,16 @@ def pregunta_02():
     ]
 
     """
-    return
+    archivo = open("data.csv")
+    text = archivo.read().split("\n")
+    archivo.close()
+    dic = {}
+    for linea in text:
+        if(linea != ''):
+            le = linea.split("\t")[0]
+            dic[le] = dic.get(le, 0) + 1
+    lista = (list(dic.items()))
+    return sorted(lista)
 
 
 def pregunta_03():
@@ -57,7 +70,17 @@ def pregunta_03():
     ]
 
     """
-    return
+    archivo = open("data.csv")
+    text = archivo.read().split("\n")
+    archivo.close()
+    dic = {}
+    for linea in text:
+        if(linea != ''):
+            lineSplit = linea.split("\t")
+            le = lineSplit[0]
+            dic[le] = dic.get(le, 0) + int(lineSplit[1])
+    lista = (list(dic.items()))
+    return sorted(lista)
 
 
 def pregunta_04():
@@ -82,7 +105,16 @@ def pregunta_04():
     ]
 
     """
-    return
+    archivo = open("data.csv")
+    text = archivo.read().split("\n")
+    archivo.close()
+    text.pop()
+    dic = {}
+    for linea in text:
+        le = linea.split("\t")[2].split("-")[1]
+        dic[le] = dic.get(le, 0) + 1
+    lista = (list(dic.items()))
+    return sorted(lista)
 
 
 def pregunta_05():
@@ -100,7 +132,18 @@ def pregunta_05():
     ]
 
     """
-    return
+    archivo = open("data.csv")
+    text = archivo.read().split("\n")
+    archivo.close()
+    text.pop()
+    dic = {}
+    for linea in text:
+        lineSplit = linea.split("\t")
+        num = int(lineSplit[1])
+        val = dic.get(lineSplit[0], (num, num))
+        dic[lineSplit[0]] = (max(val[0], num), min(val[1], num))
+    lista = [(key, dic[key][0], dic[key][1]) for key in dic]
+    return sorted(lista)
 
 
 def pregunta_06():
@@ -125,7 +168,20 @@ def pregunta_06():
     ]
 
     """
-    return
+    archivo = open("data.csv")
+    text = archivo.read().split("\n")
+    archivo.close()
+    text.pop()
+    dic = {}
+    for linea in text:
+        li = linea.split("\t")[4].split(",")
+        for l in li:
+            cla,val = l.split(":")
+            val = int(val)
+            tupl = dic.get(cla, (val, val))
+            dic[cla] = (min(tupl[0], val), max(tupl[1], val))
+    lista = [(key, dic[key][0], dic[key][1]) for key in dic]
+    return sorted(lista)
 
 
 def pregunta_07():
@@ -149,8 +205,17 @@ def pregunta_07():
     ]
 
     """
-    return
-
+    archivo = open("data.csv")
+    text = archivo.read().split("\n")
+    archivo.close()
+    text.pop()
+    dic = {}
+    for linea in text:
+        li = linea.split("\t")
+        num = int(li[1])
+        val = dic.get(num, [])
+        dic[num] = val + [li[0]]
+    return sorted(dic.items())
 
 def pregunta_08():
     """
@@ -174,7 +239,19 @@ def pregunta_08():
     ]
 
     """
-    return
+    archivo = open("data.csv")
+    text = archivo.read().split("\n")
+    archivo.close()
+    text.pop()
+    dic = {}
+    for linea in text:
+        li = linea.split("\t")
+        num = int(li[1])
+        val = dic.get(num, [])
+        if(li[0] not in val):
+            dic[num] = val + [li[0]]
+    lista = [(key, sorted(dic[key])) for key in dic]
+    return sorted(lista)
 
 
 def pregunta_09():
@@ -197,7 +274,18 @@ def pregunta_09():
     }
 
     """
-    return
+    archivo = open("data.csv")
+    text = archivo.read().split("\n")
+    archivo.close()
+    text.pop()
+    dic = {}
+    for linea in text:
+        li = linea.split("\t")[4].split(",")
+        for l in li:
+            cla,_ = l.split(":")
+            val = dic.get(cla, 0)
+            dic[cla] = val + 1
+    return dict(sorted(dic.items()))
 
 
 def pregunta_10():
@@ -218,7 +306,15 @@ def pregunta_10():
 
 
     """
-    return
+    archivo = open("data.csv")
+    text = archivo.read().split("\n")
+    archivo.close()
+    text.pop()
+    lista = []
+    for linea in text:
+        li = linea.split("\t")
+        lista.append((li[0], len(li[3].split(",")), len(li[4].split(","))))
+    return lista
 
 
 def pregunta_11():
@@ -239,7 +335,18 @@ def pregunta_11():
 
 
     """
-    return
+    archivo = open("data.csv")
+    text = archivo.read().split("\n")
+    archivo.close()
+    text.pop()
+    dic = {}
+    for linea in text:
+        li = linea.split("\t")
+        num = int(li[1])
+        for letra in li[3].split(","):
+            val = dic.get(letra, 0)
+            dic[letra]  = val + num
+    return dict(sorted(dic.items()))
 
 
 def pregunta_12():
@@ -257,4 +364,14 @@ def pregunta_12():
     }
 
     """
-    return
+    archivo = open("data.csv")
+    text = archivo.read().split("\n")
+    archivo.close()
+    text.pop()
+    dic = {}
+    for linea in text:
+        li = linea.split("\t")
+        suma = sum([int(num) for num in [a for l in li[4].split(",") for a in l.split(":")][1::2]])
+        val = dic.get(li[0], 0)
+        dic[li[0]] = val + suma
+    return dict(sorted(dic.items()))
